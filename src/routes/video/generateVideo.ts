@@ -207,15 +207,35 @@ async function generateVideoAsync(
       }),
     );
 
+    // 将人物对话 / 第三方叙述 / 角色音色信息拼接进主提示词
+    let finalPrompt = prompt;
+    const extraSections: string[] = [];
+    if (dialogue && dialogue.trim()) {
+      extraSections.push(`【人物对话】\n${dialogue.trim()}`);
+    }
+    if (narration && narration.trim()) {
+      extraSections.push(`【第三方视角叙述】\n${narration.trim()}`);
+    }
+    if (characterVoiceMap && Object.keys(characterVoiceMap).length > 0) {
+      const voiceLines = Object.entries(characterVoiceMap)
+        .map(([name, voiceId]) => `${name} -> voiceId: ${voiceId}`)
+        .join("；");
+      extraSections.push(`【角色音色映射】\n${voiceLines}`);
+    }
+    if (extraSections.length > 0) {
+      finalPrompt = `${prompt}\n\n${extraSections.join("\n\n")}`;
+    }
+
     const inputPrompt = `
 请完全参照以下内容生成视频：
-${prompt}
+${finalPrompt}
 重要强调：
 风格高度保持${projectData?.artStyle || "CG"}风格，保证人物一致性
 1. 视频整体风格、色调、光影、人脸五官与参考图片保持高度一致
 2. 保证视频连贯性、前后无矛盾
 3. 关键人物在画面中全部清晰显示，不得被遮挡、缺失或省略
 4. 画面真实、细致，无畸形、无模糊、无杂物、无多余人物、无文字、水印、logo
+5. 根据人物对话生成对应角色的对白声音，并根据第三方视角叙述生成清晰自然的旁白声音；严格按照角色音色映射分配不同角色的声音，不得将对白或旁白渲染为画面中的文字
 `;
     const videoPath = await u.ai.video(
       {
@@ -226,9 +246,6 @@ ${prompt}
         aspectRatio: projectData?.videoRatio as any,
         resolution: resolution as any,
         audio: audioEnabled,
-        ...(dialogue && { dialogue }),
-        ...(characterVoiceMap && Object.keys(characterVoiceMap).length > 0 && { characterVoiceMap }),
-        ...(narration && { narration }),
       },
       {
         baseURL: aiConfigData?.baseUrl!,
