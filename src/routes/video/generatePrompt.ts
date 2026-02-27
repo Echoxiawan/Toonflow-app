@@ -112,10 +112,6 @@ Parameters:
 - Shot Count: ${shotCount}
 - Average Duration: ${avgDuration}s per shot
 
-Requirements:
-- 生成内容中必须包含每个镜头/时间段的人物对话描述。
-- 若有对白，请写出角色与台词的对应关系（格式如「角色名：台词」），便于后续按角色匹配音色。
-
 Generate storyboard prompts:`,
             },
           ],

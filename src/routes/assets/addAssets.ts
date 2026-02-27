@@ -18,6 +18,8 @@ export default router.post(
     remark: z.string().optional().nullable(),
     episode: z.string().optional().nullable(),
     voiceId: z.string().optional().nullable(),
+    dialogue: z.string().optional().nullable(),
+    narration: z.string().optional().nullable(),
   }),
   async (req, res) => {
     const { projectId, name, intro, type, prompt, remark, episode, scriptId, voiceId, dialogue, narration } = req.body;

@@ -53,14 +53,20 @@ export default router.post(
       const projectId = results[0].projectId;
       const scriptRow = await u.db("t_script").where("id", scriptId).select("content").first();
       const scriptText = scriptRow?.content ?? "";
+      // 只查询本次插入且需生成提示词的行：用 (segmentId, shotIndex) 精确匹配，避免 orderBy id + limit 误取到其他分镜
+      const segmentShotPairs = needGenerate.map((r: any) => [r.segmentId, r.shotIndex]) as [number, number][];
+      const placeholders = segmentShotPairs.map(() => "(?, ?)").join(", ");
+      const bindings = segmentShotPairs.flat();
       const insertedRows = await u
         .db("t_assets")
         .where({ scriptId, projectId, type: "分镜" })
-        .orderBy("id", "desc")
-        .limit(needGenerate.length)
+        .whereRaw(`(segmentId, shotIndex) IN (${placeholders})`, bindings)
+        .orderBy("segmentId", "asc")
+        .orderBy("shotIndex", "asc")
         .select("id", "filePath", "prompt");
       Promise.all(
-        insertedRows.map(async (row: { id: number; filePath: string | null; prompt: string | null }) => {
+        insertedRows.map(async (row) => {
+          if (row.id == null) return;
           try {
             const imageUrl = row.filePath ? await u.oss.getFileUrl(row.filePath) : "";
             if (!imageUrl) return;
