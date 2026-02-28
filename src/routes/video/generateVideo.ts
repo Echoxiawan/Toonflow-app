@@ -167,6 +167,7 @@ export default router.post(
       dialogue,
       Object.keys(characterVoiceMap).length > 0 ? characterVoiceMap : undefined,
       narration,
+        mode,
     );
   },
 );
@@ -185,6 +186,7 @@ async function generateVideoAsync(
   dialogue?: string,
   characterVoiceMap?: Record<string, string>,
   narration?: string,
+  mode: string,
 ) {
   try {
     const projectData = await u.db("t_project").where("id", projectId).select("artStyle", "videoRatio").first();
@@ -246,6 +248,7 @@ ${finalPrompt}
         aspectRatio: projectData?.videoRatio as any,
         resolution: resolution as any,
         audio: audioEnabled,
+        mode: mode as any,
       },
       {
         baseURL: aiConfigData?.baseUrl!,

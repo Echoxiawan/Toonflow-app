@@ -12,6 +12,7 @@ interface VideoConfig {
   characterVoiceMap?: Record<string, string>;
   /** 第三方视角叙述文本，供支持旁白/解说的厂商使用 */
   narration?: string;
+  mode: "startEnd" | "multi" | "single" | "text";
 }
 
 interface AIConfig {
