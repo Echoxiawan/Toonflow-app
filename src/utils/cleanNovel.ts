@@ -3,6 +3,7 @@ import { EventEmitter } from "events";
 import u from "@/utils";
 import { v4 as uuidv4 } from "uuid";
 import { ModelMessage } from "ai";
+import { o_novel } from "@/types/database";
 function simpleShortUuid(length = 8) {
   return uuidv4().replace(/-/g, "").slice(0, length);
 }
@@ -92,23 +93,20 @@ class CleanNovel {
     this.windowSize = windowSize;
     this.overlap = overlap;
   }
-  async start(projectId: number): Promise<{ totalEvent: EventType[] }> {
-    const allChapters = await u.db("o_novel").where("projectId", projectId);
-
+  async start(allChapters: o_novel[]): Promise<{ totalEvent: EventType[] }> {
     const groups = getChapterGroups(allChapters!, this.windowSize, this.overlap);
 
     let preData: Novel | null = null;
     //所有事件
     let totalEvent: EventType[] = [];
-    //所有人物
 
     try {
       for (const group of groups) {
         const cleanText = group
-          .map((i: any, index: number) => {
+          .map((i, index: number) => {
             return {
               role: "user",
-              content: `【第${i.index}章 ${i.chapter}】 ${
+              content: `【第${i.chapterIndex}章 ${i.chapter}】 ${
                 i.length > this.windowSize && i.length <= this.overlap - 1 ? `（前置章节内容，仅供参考，严禁并入章节范围）` : ``
               }
             ${i.text}`,

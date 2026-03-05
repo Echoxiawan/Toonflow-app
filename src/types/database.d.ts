@@ -1,6 +1,133 @@
-// @db-hash 8171d26b6ac1f411a6ec46a0381b821a
+// @db-hash f477fd97a83ab4152679f2b243e8a1b7
 //该文件由脚本自动生成，请勿手动修改
 
+export interface o_agentDeploy {
+  'id'?: number;
+  'name'?: string | null;
+  'startTime'?: number | null;
+}
+export interface o_artStyle {
+  'id'?: number;
+  'name'?: string | null;
+  'styles'?: string | null;
+}
+export interface o_assets {
+  'id'?: number;
+  'name'?: string | null;
+  'startTime'?: number | null;
+}
+export interface o_event {
+  'createTime'?: number | null;
+  'detail'?: string | null;
+  'id'?: number;
+  'name'?: string | null;
+}
+export interface o_eventChapter {
+  'createTime'?: number | null;
+  'id'?: number;
+  'name'?: string | null;
+}
+export interface o_model {
+  'id'?: number;
+  'name'?: string | null;
+  'startTime'?: number | null;
+}
+export interface o_myTasks {
+  'describe'?: string | null;
+  'id'?: number;
+  'model'?: string | null;
+  'projectId'?: number | null;
+  'reason'?: string | null;
+  'relatedObjects'?: string | null;
+  'startTime'?: number | null;
+  'state'?: string | null;
+  'taskClass'?: string | null;
+}
+export interface o_novel {
+  'chapter'?: string | null;
+  'chapterData'?: string | null;
+  'chapterIndex'?: number | null;
+  'createTime'?: number | null;
+  'id'?: number;
+  'projectId'?: number | null;
+  'reel'?: string | null;
+}
+export interface o_outline {
+  'createTime'?: number | null;
+  'id'?: number;
+  'name'?: string | null;
+}
+export interface o_outlineNovel {
+  'createTime'?: number | null;
+  'id'?: number;
+  'name'?: string | null;
+}
+export interface o_project {
+  'artStyle'?: string | null;
+  'createTime'?: number | null;
+  'id'?: number | null;
+  'intro'?: string | null;
+  'name'?: string | null;
+  'projectType'?: string | null;
+  'type'?: string | null;
+  'userId'?: number | null;
+  'videoRatio'?: string | null;
+}
+export interface o_prompts {
+  'code'?: string | null;
+  'customValue'?: string | null;
+  'defaultValue'?: string | null;
+  'id'?: number;
+  'name'?: string | null;
+  'parentCode'?: string | null;
+  'type'?: string | null;
+}
+export interface o_script {
+  'createTime'?: number | null;
+  'id'?: number;
+  'name'?: string | null;
+}
+export interface o_scriptAssets {
+  'createTime'?: number | null;
+  'id'?: number;
+  'name'?: string | null;
+}
+export interface o_scriptOutline {
+  'createTime'?: number | null;
+  'id'?: number;
+  'name'?: string | null;
+}
+export interface o_setUp {
+  'id'?: number;
+  'name'?: string | null;
+  'startTime'?: number | null;
+}
+export interface o_skills {
+  'id'?: number;
+  'name'?: string | null;
+  'startTime'?: number | null;
+}
+export interface o_storyboard {
+  'createTime'?: number | null;
+  'id'?: number;
+  'name'?: string | null;
+}
+export interface o_storyboardScript {
+  'createTime'?: number | null;
+  'id'?: number;
+  'name'?: string | null;
+}
+export interface o_user {
+  'id'?: number;
+  'name'?: string | null;
+  'password'?: string | null;
+  'tokenKey'?: string | null;
+}
+export interface o_video {
+  'createTime'?: number | null;
+  'id'?: number;
+  'name'?: string | null;
+}
 export interface t_aiModelMap {
   'configId'?: number | null;
   'id'?: number;
@@ -13,6 +140,7 @@ export interface t_artStyle {
   'styles'?: string | null;
 }
 export interface t_assets {
+  'dialogue'?: string | null;
   'duration'?: string | null;
   'episode'?: string | null;
   'filePath'?: string | null;
@@ -96,7 +224,6 @@ export interface t_project {
   'id'?: number | null;
   'intro'?: string | null;
   'name'?: string | null;
-  'projectType'?: string | null;
   'type'?: string | null;
   'userId'?: number | null;
   'videoRatio'?: string | null;
@@ -132,6 +259,15 @@ export interface t_storyline {
   'novelIds'?: string | null;
   'projectId'?: number | null;
 }
+export interface t_taskList {
+  'endTime'?: string | null;
+  'id'?: number;
+  'name'?: string | null;
+  'projectName'?: number | null;
+  'prompt'?: string | null;
+  'startTime'?: string | null;
+  'state'?: string | null;
+}
 export interface t_textModel {
   'id'?: number;
   'image'?: number | null;
@@ -165,6 +301,7 @@ export interface t_videoConfig {
   'aiConfigId'?: number | null;
   'audioEnabled'?: number | null;
   'createTime'?: number | null;
+  'dialogue'?: string | null;
   'duration'?: number | null;
   'endFrame'?: string | null;
   'id'?: number;
@@ -190,6 +327,27 @@ export interface t_videoModel {
 }
 
 export interface DB {
+  "o_agentDeploy": o_agentDeploy;
+  "o_artStyle": o_artStyle;
+  "o_assets": o_assets;
+  "o_event": o_event;
+  "o_eventChapter": o_eventChapter;
+  "o_model": o_model;
+  "o_myTasks": o_myTasks;
+  "o_novel": o_novel;
+  "o_outline": o_outline;
+  "o_outlineNovel": o_outlineNovel;
+  "o_project": o_project;
+  "o_prompts": o_prompts;
+  "o_script": o_script;
+  "o_scriptAssets": o_scriptAssets;
+  "o_scriptOutline": o_scriptOutline;
+  "o_setUp": o_setUp;
+  "o_skills": o_skills;
+  "o_storyboard": o_storyboard;
+  "o_storyboardScript": o_storyboardScript;
+  "o_user": o_user;
+  "o_video": o_video;
   "t_aiModelMap": t_aiModelMap;
   "t_artStyle": t_artStyle;
   "t_assets": t_assets;
@@ -205,6 +363,7 @@ export interface DB {
   "t_script": t_script;
   "t_setting": t_setting;
   "t_storyline": t_storyline;
+  "t_taskList": t_taskList;
   "t_textModel": t_textModel;
   "t_user": t_user;
   "t_video": t_video;
