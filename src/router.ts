@@ -1,7 +1,38 @@
-// @routes-hash d751713988987e9331980363e24189ce
+// @routes-hash 666c123ce474c8e5d0e930acd6c9be9c
 import { Express } from "express";
 
-
+import route1 from "./routes/artStyle/getArtStyle";
+import route2 from "./routes/other/clearDatabase";
+import route3 from "./routes/other/deleteAllData";
+import route4 from "./routes/other/getCaptcha";
+import route5 from "./routes/other/login";
+import route6 from "./routes/other/testAI";
+import route7 from "./routes/other/testImage";
+import route8 from "./routes/other/testVideo";
+import route9 from "./routes/project/addProject";
+import route10 from "./routes/project/delProject";
+import route11 from "./routes/project/getProject";
+import route12 from "./routes/project/getProjectCount";
+import route13 from "./routes/project/getSingleProject";
+import route14 from "./routes/project/updateProject";
+import route15 from "./routes/user/getUser";
+import route16 from "./routes/user/saveUser";
 
 export default async (app: Express) => {
+  app.use("/artStyle/getArtStyle", route1);
+  app.use("/other/clearDatabase", route2);
+  app.use("/other/deleteAllData", route3);
+  app.use("/other/getCaptcha", route4);
+  app.use("/other/login", route5);
+  app.use("/other/testAI", route6);
+  app.use("/other/testImage", route7);
+  app.use("/other/testVideo", route8);
+  app.use("/project/addProject", route9);
+  app.use("/project/delProject", route10);
+  app.use("/project/getProject", route11);
+  app.use("/project/getProjectCount", route12);
+  app.use("/project/getSingleProject", route13);
+  app.use("/project/updateProject", route14);
+  app.use("/user/getUser", route15);
+  app.use("/user/saveUser", route16);
 }

@@ -42,7 +42,7 @@ export default async function startServe(randomPort: Boolean = false) {
   app.use(express.static(rootDir));
 
   app.use(async (req, res, next) => {
-    const setting = await u.db("t_setting").where("id", 1).select("tokenKey").first();
+    const setting = await u.db("o_setting").where("id", 1).select("tokenKey").first();
     if (!setting) return res.status(500).send({ message: "服务器未配置，请联系管理员" });
     const { tokenKey } = setting;
     // 从 header 或 query 参数获取 token

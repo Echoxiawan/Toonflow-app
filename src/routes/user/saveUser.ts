@@ -5,15 +5,20 @@ import { success } from "@/lib/responseFormat";
 import { validateFields } from "@/middleware/middleware";
 const router = express.Router();
 
+// 获取用户
 export default router.post(
   "/",
   validateFields({
     name: z.string(),
+    password: z.string(),
+    id: z.number(),
   }),
   async (req, res) => {
-    const { name } = req.body;
-    const data = await u.db("o_artStyle").where("name", name).select("styles").first();
-    const styles = data?.styles ? JSON.parse(data.styles) : [];
-    res.status(200).send(success(styles));
+    const { name, password, id } = req.body;
+    await u.db("o_user").where("id", id).update({
+      name,
+      password,
+    });
+    res.status(200).send(success("保存设置成功"));
   },
 );
