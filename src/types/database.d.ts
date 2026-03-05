@@ -1,4 +1,4 @@
-// @db-hash f477fd97a83ab4152679f2b243e8a1b7
+// @db-hash 83ab50b0cb24ccd77be607ac6ef047d3
 //该文件由脚本自动生成，请勿手动修改
 
 export interface o_agentDeploy {
@@ -96,6 +96,14 @@ export interface o_scriptOutline {
   'createTime'?: number | null;
   'id'?: number;
   'name'?: string | null;
+}
+export interface o_setting {
+  'id'?: number;
+  'imageModel'?: string | null;
+  'languageModel'?: string | null;
+  'projectId'?: number | null;
+  'tokenKey'?: string | null;
+  'userId'?: number | null;
 }
 export interface o_setUp {
   'id'?: number;
@@ -342,6 +350,7 @@ export interface DB {
   "o_script": o_script;
   "o_scriptAssets": o_scriptAssets;
   "o_scriptOutline": o_scriptOutline;
+  "o_setting": o_setting;
   "o_setUp": o_setUp;
   "o_skills": o_skills;
   "o_storyboard": o_storyboard;

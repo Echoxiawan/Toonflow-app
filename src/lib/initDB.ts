@@ -80,15 +80,27 @@ export default async (knex: Knex, forceInit: boolean = false): Promise<void> => 
     },
     //设置表
     {
-      name: "o_setUp",
+      name: "o_setting",
       builder: (table) => {
         table.integer("id").notNullable();
-        table.string("name");
-        table.integer("startTime");
+        table.integer("userId");
+        table.text("tokenKey");
+        table.text("imageModel");
+        table.text("languageModel");
+        table.integer("projectId");
         table.primary(["id"]);
         table.unique(["id"]);
       },
-      initData: async (knex) => { },
+      initData: async (knex) => {
+        await knex("o_setting").insert({
+          id: 1,
+          userId: 1,
+          tokenKey: uuid().slice(0, 8),
+          imageModel: "{}",
+          languageModel: "{}",
+          projectId: null,
+        });
+      },
     },
     //模型表
     {
@@ -416,7 +428,9 @@ export default async (knex: Knex, forceInit: boolean = false): Promise<void> => 
       name: "o_script",
       builder: (table) => {
         table.integer("id").notNullable();
-        table.string("name");
+        table.text("name");
+        table.text("content");
+        table.integer("projectId");
         table.integer("createTime");
         table.primary(["id"]);
         table.unique(["id"]);

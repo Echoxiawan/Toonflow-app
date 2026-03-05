@@ -84,12 +84,11 @@ class Logger {
       const firstNewline = half.indexOf("\n");
       fs.writeFileSync(LOG_FILE, firstNewline >= 0 ? half.slice(firstNewline + 1) : half);
       this.stream = fs.createWriteStream(LOG_FILE, { flags: "a" });
-    } catch {}
+    } catch { }
   }
 
   private hijack(): void {
     if (this.isHijacked) return;
-
     // 劫持 console 方法
     for (const level of LEVELS) {
       const original = console[level];
@@ -97,7 +96,12 @@ class Logger {
       this.originalConsole[level] = original.bind(console);
       (console as any)[level] = (...args: unknown[]) => {
         this.writing = true;
-        this.write(level, args);
+        try {
+          // this.write(level, args);
+        } catch (err) {
+          this.originalConsole.error?.("[Logger Error]", err);
+        }
+
         this.originalConsole[level]!(...args);
         this.writing = false;
       };
