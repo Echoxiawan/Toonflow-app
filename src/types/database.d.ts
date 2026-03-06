@@ -1,4 +1,4 @@
-// @db-hash 175d9f3b78c74a95ceef6c26cdfda844
+// @db-hash 4afa4ad24a18c27e700a7b35d7a6cf5e
 //该文件由脚本自动生成，请勿手动修改
 
 export interface o_agentDeploy {
@@ -12,9 +12,17 @@ export interface o_artStyle {
   'styles'?: string | null;
 }
 export interface o_assets {
+  'describe'?: string | null;
+  'filePath'?: string | null;
   'id'?: number;
   'name'?: string | null;
+  'projectId'?: number | null;
+  'prompt'?: string | null;
+  'remark'?: string | null;
+  'sonId'?: number | null;
   'startTime'?: number | null;
+  'state'?: string | null;
+  'type'?: string | null;
 }
 export interface o_event {
   'createTime'?: number | null;
@@ -52,14 +60,15 @@ export interface o_novel {
   'reel'?: string | null;
 }
 export interface o_outline {
-  'createTime'?: number | null;
+  'data'?: string | null;
+  'episode'?: number | null;
   'id'?: number;
-  'name'?: string | null;
+  'projectId'?: number | null;
 }
 export interface o_outlineNovel {
-  'createTime'?: number | null;
   'id'?: number;
-  'name'?: string | null;
+  'novelId'?: number | null;
+  'outlineId'?: number | null;
 }
 export interface o_project {
   'artStyle'?: string | null;
@@ -73,9 +82,13 @@ export interface o_project {
   'videoRatio'?: string | null;
 }
 export interface o_prompt {
+  'code'?: string | null;
+  'customValue'?: string | null;
+  'defaultValue'?: string | null;
   'id'?: number;
   'name'?: string | null;
-  'startTime'?: number | null;
+  'parentCode'?: string | null;
+  'type'?: string | null;
 }
 export interface o_script {
   'content'?: string | null;
@@ -85,14 +98,14 @@ export interface o_script {
   'projectId'?: number | null;
 }
 export interface o_scriptAssets {
-  'createTime'?: number | null;
+  'assetsId'?: number | null;
   'id'?: number;
-  'name'?: string | null;
+  'scriptId'?: number | null;
 }
 export interface o_scriptOutline {
-  'createTime'?: number | null;
   'id'?: number;
-  'name'?: string | null;
+  'outlineId'?: number | null;
+  'scriptId'?: number | null;
 }
 export interface o_setting {
   'id'?: number;
@@ -113,9 +126,9 @@ export interface o_storyboard {
   'name'?: string | null;
 }
 export interface o_storyboardScript {
-  'createTime'?: number | null;
   'id'?: number;
-  'name'?: string | null;
+  'scriptId'?: number | null;
+  'storyboardId'?: number | null;
 }
 export interface o_user {
   'id'?: number;
