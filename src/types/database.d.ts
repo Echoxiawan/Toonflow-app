@@ -1,4 +1,4 @@
-// @db-hash 4afa4ad24a18c27e700a7b35d7a6cf5e
+// @db-hash e58b907eede324e9949ac2ff83195026
 //该文件由脚本自动生成，请勿手动修改
 
 export interface o_agentDeploy {
@@ -90,6 +90,15 @@ export interface o_prompt {
   'parentCode'?: string | null;
   'type'?: string | null;
 }
+export interface o_prompts {
+  'code'?: string | null;
+  'customValue'?: string | null;
+  'defaultValue'?: string | null;
+  'id'?: number;
+  'name'?: string | null;
+  'parentCode'?: string | null;
+  'type'?: string | null;
+}
 export interface o_script {
   'content'?: string | null;
   'createTime'?: number | null;
@@ -154,6 +163,7 @@ export interface DB {
   "o_outlineNovel": o_outlineNovel;
   "o_project": o_project;
   "o_prompt": o_prompt;
+  "o_prompts": o_prompts;
   "o_script": o_script;
   "o_scriptAssets": o_scriptAssets;
   "o_scriptOutline": o_scriptOutline;

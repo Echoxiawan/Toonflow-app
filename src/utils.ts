@@ -14,6 +14,8 @@ import AIImage from "@/utils/ai/image/index";
 import AIVideo from "@/utils/ai/video/index";
 
 import getPromptAi from "./utils/getPromptAi";
+import cleanNovel from "./utils/cleanNovel";
+
 export default {
   db,
   oss,
@@ -30,4 +32,5 @@ export default {
   error,
   imageTools,
   getPromptAi,
+  cleanNovel,
 };

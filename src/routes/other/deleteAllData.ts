@@ -5,7 +5,7 @@ const router = express.Router();
 
 // 删除数据库表数据
 export default router.post("/", async (req, res) => {
-  const projects = await u.db("o_project").select("id");
+  const projects = await u.db("t_project").select("id");
 
   const projectIds = projects.map((project) => project.id);
 
