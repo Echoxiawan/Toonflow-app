@@ -40,7 +40,6 @@ export default router.post(
     });
     //调用完成
     emitter.on("data", async (data) => {
-      console.log("%c Line:24 🧀 data", "background:#ea7e5c", data);
       await Promise.all(itemPromises);
       res.end();
     });
