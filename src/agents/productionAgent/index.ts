@@ -6,6 +6,7 @@ import Memory from "@/utils/agent/memory";
 import { useSkill } from "@/utils/agent/skillsTools";
 import useTools from "@/agents/productionAgent/tools";
 import ResTool from "@/socket/resTool";
+import * as fs from "fs";
 
 export interface AgentContext {
   socket: Socket;
@@ -40,14 +41,19 @@ export async function decisionAI(ctx: AgentContext) {
   const memory = new Memory("productionAgent", isolationKey);
   await memory.add("user", text);
 
-  const skill = await useSkill({ mainSkill: "production_agent_decision" }, buildMemPrompt(await memory.get(text)));
+  const { skillPaths } = await useSkill({ mainSkill: "production_agent_decision" });
+  const prompt = await fs.promises.readFile(skillPaths.mainSkill, "utf-8");
+
+  const mem = buildMemPrompt(await memory.get(text));
 
   const { textStream } = await u.Ai.Text("productionAgent").stream({
-    system: skill.prompt,
-    messages: [{ role: "user", content: text }],
+    messages: [
+      { role: "system", content: prompt },
+      { role: "system", content: mem },
+      { role: "user", content: text },
+    ],
     abortSignal,
     tools: {
-      ...skill.tools,
       ...memory.getTools(),
       run_sub_agent: runSubAgent(ctx),
       ...useTools({ resTool: ctx.resTool, msg: ctx.msg }),
@@ -90,9 +96,9 @@ export async function supervisionAI(ctx: AgentContext) {
   const { text, abortSignal } = ctx;
 
   const skill = await useSkill({ mainSkill: "production_agent_supervision", workspace: ["production_agent_skills/supervision"] });
-  const subMsg = ctx.resTool.newMessage("assistant", "编辑");
+  const subMsg = ctx.resTool.newMessage("assistant", "监制");
 
-  const { textStream } = await u.Ai.Text("scriptAgent").stream({
+  const { textStream } = await u.Ai.Text("productionAgent").stream({
     system: skill.prompt,
     messages: [{ role: "user", content: text }],
     abortSignal,
@@ -110,7 +116,7 @@ export async function supervisionAI(ctx: AgentContext) {
 
 //工具函数
 function runSubAgent(parentCtx: AgentContext) {
-  const memory = new Memory("scriptAgent", parentCtx.isolationKey);
+  const memory = new Memory("productionAgent", parentCtx.isolationKey);
   return tool({
     description: "启动子Agent执行独立任务。可用子Agent:executionAI, decisionAI, supervisionAI",
     inputSchema: z.object({
@@ -134,13 +140,13 @@ function runSubAgent(parentCtx: AgentContext) {
       subMsg.complete();
       if (fullResponse.trim()) {
         await memory.add(`assistant:${agent === "executionAI" ? "execution" : "supervision"}`, fullResponse, {
-          name: agent === "executionAI" ? "编剧" : "编辑",
+          name: agent === "executionAI" ? "执行导演" : "监制",
           createTime: new Date(subMsg.datetime).getTime(),
         });
       }
 
       // 为主Agent后续输出创建新消息
-      parentCtx.msg = parentCtx.resTool.newMessage("assistant", "统筹");
+      parentCtx.msg = parentCtx.resTool.newMessage("assistant", "监制");
 
       return fullResponse;
     },
